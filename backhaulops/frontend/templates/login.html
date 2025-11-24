@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Login</h2>
+<form id="loginForm">
+  <input id="username" placeholder="username" required />
+  <input id="password" type="password" placeholder="password" required />
+  <button type="submit">Entrar</button>
+</form>
+<script>
+  $("#loginForm").on("submit", function (e) {
+    e.preventDefault();
+    $.post("/api/token/", {
+      username: $("#username").val(),
+      password: $("#password").val(),
+    })
+    .done(function (data) {
+      localStorage.setItem("access", data.access);
+      window.location = "/links.html";
+    })
+    .fail(function (xhr) { alert(JSON.stringify(xhr.responseJSON)); });
+  });
+</script>
+{% endblock %}
