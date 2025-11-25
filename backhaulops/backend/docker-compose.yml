@@ -1,14 +1,27 @@
 version: "3.9"
 services:
+  web:
+    build: .
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    env_file: .env
+    ports: ["8000:8000"]
+    volumes:
+    - ./:/app
+    - ../frontend:/frontend:ro
+    depends_on: [postgres, mongo, redis, mailhog]
   postgres:
-    image: postgres:16
+    image: postgres:17
     environment:
       POSTGRES_DB: backhaulops
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-volumes:
-  pgdata:
+      POSTGRES_PASSWORD: Olimpia1902
+    ports: ["5432:5432"]
+  mongo:
+    image: mongo:7
+    ports: ["27017:27017"]
+  redis:
+    image: redis:7
+    ports: ["6379:6379"]
+  mailhog:
+    image: mailhog/mailhog
+    ports: ["1025:1025", "8025:8025"]

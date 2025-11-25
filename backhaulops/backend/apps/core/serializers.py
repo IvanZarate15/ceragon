@@ -12,7 +12,7 @@ def haversine_km(lat1, lon1, lat2, lon2):
     dlat = radians(float(lat2) - float(lat1))
     dlon = radians(float(lon2) - float(lon1))
     a = sin(dlat/2)**2 + cos(radians(float(lat1))) * cos(radians(float(lat2))) * sin(dlon/2)**2
-    return round(2 * R *atan2(sqrt(a), sqrt(1 - a)), 3)
+    return round(2 * R *atan2(sqrt(a), sqrt(1 -  a)), 3)
 
 class LinkSerializer(serializers.ModelSerializer):
     site_a = serializers.SlugRelatedField(slug_field = "slug", queryset=Site.objects.all())

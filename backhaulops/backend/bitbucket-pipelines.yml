@@ -1,0 +1,13 @@
+# backend/bitbucket-pipelines.yml
+pipelines:
+  default:
+    - step:
+        name: Lint & Tests
+        image: python:3.12
+        caches: [pip]
+        script:
+          - pip install -r requirements.txt
+          - black --check .
+          - isort --check-only .
+          - flake8 .
+          - pytest -q
